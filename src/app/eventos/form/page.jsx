@@ -2,8 +2,17 @@
 
 import { useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
+import PrivateRoute from "@/components/PrivateRoute";
 
-export default function EventosForm() {
+export default function Page() {
+  return (
+    <PrivateRoute>
+      <EventosForm />
+    </PrivateRoute>
+  );
+}
+
+function EventosForm() {
   const [titulo, setTitulo] = useState("");
   const [descricao, setDescricao] = useState("");
   const [dataEvento, setDataEvento] = useState("");
@@ -18,6 +27,17 @@ export default function EventosForm() {
     setMensagem("");
 
     try {
+      // 🔹 Obtém usuário logado
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      const usuario = session?.user;
+      if (!usuario) {
+        setMensagem("❌ Sessão expirada. Faça login novamente.");
+        setCarregando(false);
+        return;
+      }
+
       let imagem_url = null;
 
       // 🔹 Upload da imagem para o Storage
@@ -36,7 +56,7 @@ export default function EventosForm() {
         imagem_url = data.publicUrl;
       }
 
-      // 🔹 Inserção dos dados na tabela eventos
+      // 🔹 Inserção dos dados na tabela "eventos"
       const { error: insertError } = await supabase.from("eventos").insert([
         {
           titulo,
@@ -44,6 +64,7 @@ export default function EventosForm() {
           data_evento: dataEvento,
           horario,
           imagem_url,
+          criado_por: usuario.id, // registra o autor do evento
         },
       ]);
 
@@ -130,7 +151,15 @@ export default function EventosForm() {
         </button>
       </form>
 
-      {mensagem && <p className="mt-4 text-center">{mensagem}</p>}
+      {mensagem && (
+        <p
+          className={`mt-4 text-center ${
+            mensagem.includes("✅") ? "text-green-600" : "text-red-600"
+          }`}
+        >
+          {mensagem}
+        </p>
+      )}
     </div>
   );
 }
