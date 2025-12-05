@@ -1,22 +1,34 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-slate-50 text-gray-800 flex flex-col">
       {/* HEADER / MENU */}
-      <header className="border-b bg-white/80 backdrop-blur">
+      <header className="border-b bg-white/90 backdrop-blur">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-          {/* Logo / Nome da igreja */}
-          <div className="flex flex-col">
-            <span className="text-sm font-semibold tracking-wide text-primary uppercase">
-              Igreja do Evangelho Quadrangular
-            </span>
-            <span className="text-xs text-gray-500">
-              Catedral da Família – Redenção / PA
-            </span>
+          {/* Logo + nome */}
+          <div className="flex items-center gap-3">
+            <div className="relative h-10 w-10 md:h-12 md:w-12">
+              <Image
+                src="/logo-quadrangular.png"
+                alt="Logomarca Igreja do Evangelho Quadrangular"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+            <div className="leading-tight">
+              <p className="text-xs font-semibold tracking-wide text-primary uppercase">
+                Igreja do Evangelho Quadrangular
+              </p>
+              <p className="text-[11px] text-gray-500">
+                Catedral da Família – Redenção / PA
+              </p>
+            </div>
           </div>
 
-          {/* Menu */}
+          {/* Menu desktop */}
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
             <a href="#inicio" className="hover:text-primary transition">
               Início
@@ -36,44 +48,53 @@ export default function HomePage() {
 
             <Link
               href="/login"
-              className="ml-4 rounded-full px-4 py-1.5 text-xs font-semibold bg-primary text-white hover:bg-primary/90 transition"
+              className="ml-4 rounded-full px-4 py-1.5 text-xs font-semibold bg-primary text-white hover:bg-primary/90 transition shadow-sm"
             >
               Área dos Líderes
             </Link>
           </nav>
 
-          {/* Versão simples do menu no mobile */}
+          {/* Botão login mobile */}
           <div className="md:hidden">
             <Link
               href="/login"
-              className="rounded-full px-4 py-1.5 text-xs font-semibold bg-primary text-white hover:bg-primary/90 transition"
+              className="rounded-full px-4 py-1.5 text-xs font-semibold bg-primary text-white hover:bg-primary/90 transition shadow-sm"
             >
               Login
             </Link>
           </div>
         </div>
+
+        {/* Faixa com as 4 cores quadrangulares */}
+        <div className="h-1 w-full flex">
+          <div className="flex-1 bg-quadrangular-red" />
+          <div className="flex-1 bg-quadrangular-yellow" />
+          <div className="flex-1 bg-quadrangular-blue" />
+          <div className="flex-1 bg-quadrangular-purple" />
+        </div>
       </header>
 
-      {/* CONTEÚDO PRINCIPAL */}
+      {/* CONTEÚDO */}
       <div className="flex-1">
         {/* HERO */}
         <section
           id="inicio"
-          className="bg-gradient-to-b from-primary/10 via-slate-50 to-slate-50"
+          className="bg-gradient-to-b from-quadrangular-yellow/10 via-slate-50 to-slate-50"
         >
           <div className="max-w-6xl mx-auto px-4 py-16 grid gap-10 md:grid-cols-2 items-center">
             <div>
-              <p className="text-sm font-semibold text-primary mb-2 uppercase tracking-wide">
-                Seja bem-vindo à Catedral da Família
+              <p className="text-xs font-semibold text-primary mb-2 uppercase tracking-[0.2em]">
+                Bem-vindo à Catedral da Família
               </p>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">
-                Um lugar de fé, família
-                <span className="text-primary"> e propósito em Deus.</span>
+                Um lugar de fé,{" "}
+                <span className="text-primary">família e restauração</span> em
+                Cristo.
               </h1>
-              <p className="text-gray-600 mb-6 max-w-lg">
+              <p className="text-gray-700 mb-6 max-w-lg">
                 Acompanhe nossos cultos, eventos e ministérios. Aqui você é
-                acolhido, cuidado e desafiado a viver tudo aquilo que Deus
-                sonhou para sua vida.
+                acolhido, cuidado e desafiado a viver o propósito de Deus para
+                sua vida.
               </p>
 
               <div className="flex flex-wrap gap-3">
@@ -85,7 +106,7 @@ export default function HomePage() {
                 </Link>
                 <a
                   href="#ministerios"
-                  className="rounded-full px-6 py-2.5 text-sm font-semibold border border-primary/30 text-primary hover:bg-primary/5 transition"
+                  className="rounded-full px-6 py-2.5 text-sm font-semibold border border-primary/40 text-primary hover:bg-primary/5 transition"
                 >
                   Conhecer os ministérios
                 </a>
@@ -94,72 +115,71 @@ export default function HomePage() {
 
             <div className="bg-white rounded-3xl shadow-md p-6 border border-slate-100 flex flex-col gap-4">
               <h2 className="text-lg font-semibold text-gray-900">
-                Próximos cultos & horários
+                Próximos cultos
               </h2>
               <ul className="text-sm text-gray-700 space-y-2">
                 <li className="flex justify-between">
                   <span>Culto de Celebração (Domingo)</span>
-                  <span className="font-medium">19h30</span>
+                  <span className="font-semibold text-primary">19h30</span>
                 </li>
                 <li className="flex justify-between">
                   <span>Culto da Família (Quarta)</span>
-                  <span className="font-medium">19h30</span>
+                  <span className="font-semibold text-primary">19h30</span>
                 </li>
                 <li className="flex justify-between">
                   <span>Reunião de Oração</span>
-                  <span className="font-medium">Consultar agenda</span>
+                  <span className="font-semibold text-primary">
+                    Consulte a agenda
+                  </span>
                 </li>
               </ul>
               <p className="text-xs text-gray-500">
-                * Horários ilustrativos. Ajuste aqui depois com os horários
-                oficiais da igreja.
+                * Horários ilustrativos. Atualize aqui com os horários oficiais
+                da igreja.
               </p>
             </div>
           </div>
         </section>
 
-        {/* SOBRE A IGREJA */}
+        {/* SOBRE */}
         <section id="sobre" className="py-12 md:py-16">
           <div className="max-w-6xl mx-auto px-4 grid gap-10 md:grid-cols-[2fr,1.5fr] items-start">
             <div>
               <h2 className="text-2xl md:text-3xl font-bold mb-4">
-                Sobre a nossa igreja
+                Sobre a Igreja do Evangelho Quadrangular
               </h2>
               <p className="text-gray-700 mb-4">
-                A Igreja do Evangelho Quadrangular em Redenção é uma comunidade
-                cristã que crê em Jesus Cristo como Salvador, Batizador com o
-                Espírito Santo, Médico dos médicos e Rei que há de vir. Nosso
-                foco é alcançar vidas, cuidar de famílias e formar discípulos
-                comprometidos com o Reino de Deus.
+                Cremos em Jesus Cristo como Salvador, Batizador com o Espírito
+                Santo, Médico dos médicos e Rei que há de vir. Como Catedral da
+                Família em Redenção, nosso foco é alcançar vidas, cuidar de
+                famílias e formar discípulos comprometidos com o Reino de Deus.
               </p>
               <p className="text-gray-700 mb-4">
-                Aqui você vai encontrar um ambiente de comunhão, louvor, ensino
-                da Palavra e serviço em diferentes ministérios, para todas as
-                idades.
+                Nossos cultos são marcados por louvor, Palavra, oração e um
+                ambiente acolhedor para todas as idades.
               </p>
 
               <ul className="space-y-2 text-gray-700 text-sm">
                 <li>• Pregação bíblica e cristocêntrica</li>
                 <li>• Acolhimento e cuidado com famílias</li>
-                <li>• Ministérios específicos para cada fase da vida</li>
-                <li>• Discipulado e formação de novos líderes</li>
+                <li>• Ministérios para crianças, jovens, adultos e idosos</li>
+                <li>• Formação e envio de novos líderes</li>
               </ul>
             </div>
 
             <div className="bg-white rounded-3xl shadow-md border border-slate-100 p-6">
               <h3 className="text-lg font-semibold mb-3">
-                Visite-nos em nossos cultos
+                Venha participar conosco
               </h3>
               <p className="text-sm text-gray-700 mb-3">
-                Endereço da igreja (ajuste depois):
+                Endereço (ajuste depois com o endereço oficial):
               </p>
-              <p className="text-sm text-gray-900 font-medium mb-4">
+              <p className="text-sm text-gray-900 font-semibold mb-4">
                 Rua Exemplo, 123 – Bairro Tal, Redenção / PA
               </p>
-
               <p className="text-xs text-gray-500">
-                Aqui você pode colocar um link para o Google Maps ou para a
-                página de contato com mais detalhes.
+                Aqui você pode colocar um link para o Google Maps ou página de
+                contato.
               </p>
             </div>
           </div>
@@ -171,40 +191,44 @@ export default function HomePage() {
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h2 className="text-2xl md:text-3xl font-bold">
-                  Nossos ministérios
+                  Ministérios da Catedral da Família
                 </h2>
                 <p className="text-sm text-gray-600 mt-1">
-                  Cada ministério serve com um propósito específico, mas todos
-                  com o mesmo coração: glorificar a Jesus.
+                  Cada ministério expressa uma parte do coração de Deus para a
+                  igreja e para a cidade.
                 </p>
               </div>
               <Link
                 href="/ministerios"
                 className="hidden md:inline-block text-sm text-primary hover:underline"
               >
-                Ver detalhes dos ministérios
+                Ver todos os ministérios
               </Link>
             </div>
 
             <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4 text-sm">
               {[
-                "Ministério de Louvor",
-                "Juventude",
-                "Ministério Infantil",
-                "Mulheres (cores)",
-                "Homens",
-                "Dança",
-                "Diaconato & Recepção",
-                "AME / MQM",
-              ].map((nome) => (
+                { nome: "Louvor", cor: "bg-quadrangular-red/10 text-quadrangular-red" },
+                { nome: "Juventude", cor: "bg-quadrangular-blue/10 text-quadrangular-blue" },
+                { nome: "Ministério Infantil", cor: "bg-quadrangular-yellow/10 text-quadrangular-yellow" },
+                { nome: "Mulheres", cor: "bg-quadrangular-purple/10 text-quadrangular-purple" },
+                { nome: "Homens", cor: "bg-quadrangular-red/10 text-quadrangular-red" },
+                { nome: "Dança", cor: "bg-quadrangular-purple/10 text-quadrangular-purple" },
+                { nome: "Diaconato & Recepção", cor: "bg-quadrangular-blue/10 text-quadrangular-blue" },
+                { nome: "AME / MQM", cor: "bg-quadrangular-yellow/10 text-quadrangular-yellow" },
+              ].map((m) => (
                 <div
-                  key={nome}
-                  className="bg-slate-50 border border-slate-100 rounded-2xl p-4 hover:shadow-sm transition"
+                  key={m.nome}
+                  className={`rounded-2xl p-4 border border-slate-100 bg-slate-50 hover:shadow-sm transition`}
                 >
-                  <p className="font-semibold text-gray-900 mb-1">{nome}</p>
+                  <span
+                    className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold mb-2 ${m.cor}`}
+                  >
+                    {m.nome}
+                  </span>
                   <p className="text-xs text-gray-600">
-                    Em breve, esta área será conectada ao painel de líderes para
-                    cada ministério.
+                    Em breve, esta área será alimentada pelos próprios líderes
+                    de cada ministério.
                   </p>
                 </div>
               ))}
@@ -212,7 +236,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* PRÓXIMOS EVENTOS (placeholder) */}
+        {/* EVENTOS (placeholder) */}
         <section id="eventos" className="py-12 md:py-16">
           <div className="max-w-6xl mx-auto px-4">
             <div className="flex items-center justify-between mb-6">
@@ -221,8 +245,8 @@ export default function HomePage() {
                   Próximos eventos
                 </h2>
                 <p className="text-sm text-gray-600 mt-1">
-                  Esta seção em breve será carregada automaticamente do
-                  Supabase.
+                  Em breve, esta seção será carregada automaticamente do
+                  Supabase com os eventos da igreja.
                 </p>
               </div>
               <Link
@@ -258,7 +282,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* CONTATO / LOCALIZAÇÃO */}
+        {/* CONTATO */}
         <section
           id="contato"
           className="py-12 md:py-16 bg-slate-900 text-slate-100"
@@ -269,14 +293,13 @@ export default function HomePage() {
                 Localização & Contato
               </h2>
               <p className="text-sm text-slate-200 mb-3">
-                Endereço, telefone e canais oficiais da igreja podem ser
-                colocados aqui.
+                Fale com a secretaria da igreja ou faça-nos uma visita.
               </p>
 
               <ul className="text-sm space-y-2 text-slate-200">
                 <li>📍 Rua Exemplo, 123 – Bairro Tal, Redenção / PA</li>
                 <li>📞 (00) 00000-0000</li>
-                <li>📧 contato@ieqcdf.com.br (ajuste depois)</li>
+                <li>📧 contato@ieqcdf.com.br</li>
               </ul>
             </div>
 
@@ -285,8 +308,8 @@ export default function HomePage() {
                 Fale com a secretaria da igreja
               </h3>
               <p className="text-sm text-slate-200">
-                Aqui você pode colocar um link direto para o WhatsApp ou para a
-                página de contato com formulário.
+                Aqui você pode colocar um link direto para o WhatsApp oficial
+                da igreja ou um formulário de contato.
               </p>
               <Link
                 href="/contato"
@@ -309,7 +332,7 @@ export default function HomePage() {
                 Área exclusiva para líderes
               </h2>
               <p className="text-sm text-gray-600 max-w-xl">
-                Líderes de ministérios podem acessar o painel para publicar
+                Líderes de ministérios acessam aqui o painel para publicar
                 eventos, avisos e conteúdos específicos do seu ministério.
               </p>
             </div>
@@ -332,8 +355,8 @@ export default function HomePage() {
             Redenção. Todos os direitos reservados.
           </span>
           <span className="text-[11px]">
-            Desenvolvido por Habeck System · Em breve com painel completo para
-            líderes.
+            Desenvolvido por Habeck System · Painel para líderes em
+            desenvolvimento.
           </span>
         </div>
       </footer>

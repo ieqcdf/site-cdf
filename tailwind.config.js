@@ -2,17 +2,21 @@
 module.exports = {
   content: [
     "./src/app/**/*.{js,jsx,ts,tsx}",
-    "./src/components/**/*.{js,jsx,ts,tsx}"
+    "./src/components/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {
       colors: {
-        primary: "#1e40af", // azul institucional
-        secondary: "#facc15", // amarelo destaque
-        background: "#f9fafb",
-        text: "#1f2937"
-      }
-    }
+        primary: "#e1272a", // vermelho IEQ
+        quadrangular: {
+          red: "#e1272a",
+          yellow: "#ffcc29",
+          blue: "#0054a6",
+          purple: "#7b2d8f",
+        },
+      },
+    },
   },
-  plugins: []
+  plugins: [],
 };
+
