@@ -3,16 +3,16 @@ import Image from "next/image";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-slate-50 text-gray-800 flex flex-col">
-      {/* HEADER / MENU */}
+    <main className="min-h-screen bg-slate-50 text-gray-900 flex flex-col">
+      {/* HEADER */}
       <header className="border-b bg-white/90 backdrop-blur">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
           {/* Logo + nome */}
           <div className="flex items-center gap-3">
             <div className="relative h-10 w-10 md:h-12 md:w-12">
               <Image
-                src="/logo-quadrangular.png"
-                alt="Logomarca Igreja do Evangelho Quadrangular"
+                src="/logo-quadrangular.png" // ajuste o nome do arquivo se for outro
+                alt="Igreja do Evangelho Quadrangular"
                 fill
                 className="object-contain"
                 priority
@@ -23,7 +23,7 @@ export default function HomePage() {
                 Igreja do Evangelho Quadrangular
               </p>
               <p className="text-[11px] text-gray-500">
-                Catedral da Família – Redenção / PA
+                Catedral da Família · Redenção / PA
               </p>
             </div>
           </div>
@@ -39,13 +39,12 @@ export default function HomePage() {
             <a href="#ministerios" className="hover:text-primary transition">
               Ministérios
             </a>
-            <a href="#eventos" className="hover:text-primary transition">
-              Eventos
+            <a href="#agenda" className="hover:text-primary transition">
+              Agenda
             </a>
             <a href="#contato" className="hover:text-primary transition">
               Contato
             </a>
-
             <Link
               href="/login"
               className="ml-4 rounded-full px-4 py-1.5 text-xs font-semibold bg-primary text-white hover:bg-primary/90 transition shadow-sm"
@@ -54,7 +53,7 @@ export default function HomePage() {
             </Link>
           </nav>
 
-          {/* Botão login mobile */}
+          {/* Mobile: só botão login */}
           <div className="md:hidden">
             <Link
               href="/login"
@@ -65,7 +64,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Faixa com as 4 cores quadrangulares */}
+        {/* Faixa com as 4 cores */}
         <div className="h-1 w-full flex">
           <div className="flex-1 bg-quadrangular-red" />
           <div className="flex-1 bg-quadrangular-yellow" />
@@ -76,39 +75,39 @@ export default function HomePage() {
 
       {/* CONTEÚDO */}
       <div className="flex-1">
-        {/* HERO */}
+        {/* HERO / WELCOME HOME */}
         <section
           id="inicio"
-          className="bg-gradient-to-b from-quadrangular-yellow/10 via-slate-50 to-slate-50"
+          className="bg-gradient-to-b from-quadrangular-blue/10 via-slate-50 to-slate-50"
         >
           <div className="max-w-6xl mx-auto px-4 py-16 grid gap-10 md:grid-cols-2 items-center">
             <div>
-              <p className="text-xs font-semibold text-primary mb-2 uppercase tracking-[0.2em]">
+              <p className="text-xs font-semibold text-primary mb-2 uppercase tracking-[0.25em]">
                 Bem-vindo à Catedral da Família
               </p>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">
-                Um lugar de fé,{" "}
-                <span className="text-primary">família e restauração</span> em
-                Cristo.
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 leading-tight">
+                Um lugar para{" "}
+                <span className="text-primary">pertencer, crer e crescer</span>{" "}
+                em Jesus.
               </h1>
               <p className="text-gray-700 mb-6 max-w-lg">
-                Acompanhe nossos cultos, eventos e ministérios. Aqui você é
-                acolhido, cuidado e desafiado a viver o propósito de Deus para
-                sua vida.
+                Somos uma igreja para toda a família, comprometida em pregar o
+                Evangelho Quadrangular e viver o amor de Cristo em Redenção.
+                Você é muito bem-vindo aqui.
               </p>
 
               <div className="flex flex-wrap gap-3">
-                <Link
-                  href="/eventos"
+                <a
+                  href="#junte-se"
                   className="rounded-full px-6 py-2.5 text-sm font-semibold bg-primary text-white hover:bg-primary/90 transition shadow-sm"
                 >
-                  Ver programação de cultos
-                </Link>
+                  Junte-se a nós neste domingo
+                </a>
                 <a
-                  href="#ministerios"
+                  href="#online"
                   className="rounded-full px-6 py-2.5 text-sm font-semibold border border-primary/40 text-primary hover:bg-primary/5 transition"
                 >
-                  Conhecer os ministérios
+                  Assistir online
                 </a>
               </div>
             </div>
@@ -134,68 +133,73 @@ export default function HomePage() {
                 </li>
               </ul>
               <p className="text-xs text-gray-500">
-                * Horários ilustrativos. Atualize aqui com os horários oficiais
+                * Ajuste os horários acima de acordo com a programação oficial
                 da igreja.
               </p>
             </div>
           </div>
         </section>
 
-        {/* SOBRE */}
-        <section id="sobre" className="py-12 md:py-16">
-          <div className="max-w-6xl mx-auto px-4 grid gap-10 md:grid-cols-[2fr,1.5fr] items-start">
-            <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">
-                Sobre a Igreja do Evangelho Quadrangular
+        {/* JUNTE-SE A NÓS DOMINGO (tipo “Join Us Sunday”) */}
+        <section
+          id="junte-se"
+          className="py-12 md:py-16 bg-white border-y border-slate-100"
+        >
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold mb-2">
+                Junte-se a nós neste fim de semana
               </h2>
-              <p className="text-gray-700 mb-4">
-                Cremos em Jesus Cristo como Salvador, Batizador com o Espírito
-                Santo, Médico dos médicos e Rei que há de vir. Como Catedral da
-                Família em Redenção, nosso foco é alcançar vidas, cuidar de
-                famílias e formar discípulos comprometidos com o Reino de Deus.
+              <p className="text-sm text-gray-600 max-w-2xl mx-auto">
+                Nossos cultos são momentos de adoração, ensino bíblico e
+                comunhão. Se você está começando na fé ou já caminha com Jesus
+                há anos, há um lugar para você aqui.
               </p>
-              <p className="text-gray-700 mb-4">
-                Nossos cultos são marcados por louvor, Palavra, oração e um
-                ambiente acolhedor para todas as idades.
-              </p>
-
-              <ul className="space-y-2 text-gray-700 text-sm">
-                <li>• Pregação bíblica e cristocêntrica</li>
-                <li>• Acolhimento e cuidado com famílias</li>
-                <li>• Ministérios para crianças, jovens, adultos e idosos</li>
-                <li>• Formação e envio de novos líderes</li>
-              </ul>
             </div>
 
-            <div className="bg-white rounded-3xl shadow-md border border-slate-100 p-6">
-              <h3 className="text-lg font-semibold mb-3">
-                Venha participar conosco
-              </h3>
-              <p className="text-sm text-gray-700 mb-3">
-                Endereço (ajuste depois com o endereço oficial):
-              </p>
-              <p className="text-sm text-gray-900 font-semibold mb-4">
-                Rua Exemplo, 123 – Bairro Tal, Redenção / PA
-              </p>
-              <p className="text-xs text-gray-500">
-                Aqui você pode colocar um link para o Google Maps ou página de
-                contato.
-              </p>
+            <div className="grid gap-4 md:grid-cols-3">
+              <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4">
+                <p className="text-xs text-gray-500 mb-1">Domingo</p>
+                <h3 className="font-semibold mb-1">Culto de Celebração</h3>
+                <p className="text-sm text-gray-700 mb-2">19h30</p>
+                <p className="text-xs text-gray-600">
+                  Louvor, Palavra e um tempo especial em família.
+                </p>
+              </div>
+
+              <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4">
+                <p className="text-xs text-gray-500 mb-1">Quarta-feira</p>
+                <h3 className="font-semibold mb-1">Culto da Família</h3>
+                <p className="text-sm text-gray-700 mb-2">19h30</p>
+                <p className="text-xs text-gray-600">
+                  Encontros para fortalecer lares e relacionamentos.
+                </p>
+              </div>
+
+              <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4">
+                <p className="text-xs text-gray-500 mb-1">Durante a semana</p>
+                <h3 className="font-semibold mb-1">Células & Ministérios</h3>
+                <p className="text-sm text-gray-700 mb-2">
+                  Horários variados
+                </p>
+                <p className="text-xs text-gray-600">
+                  Pequenos grupos e encontros específicos de cada ministério.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
         {/* MINISTÉRIOS */}
-        <section id="ministerios" className="py-12 md:py-16 bg-white border-y">
+        <section id="ministerios" className="py-12 md:py-16 bg-slate-50">
           <div className="max-w-6xl mx-auto px-4">
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h2 className="text-2xl md:text-3xl font-bold">
-                  Ministérios da Catedral da Família
+                  Ministérios para toda a família
                 </h2>
                 <p className="text-sm text-gray-600 mt-1">
-                  Cada ministério expressa uma parte do coração de Deus para a
-                  igreja e para a cidade.
+                  Sirva, cresça e se conecte em um dos nossos ministérios.
                 </p>
               </div>
               <Link
@@ -219,7 +223,7 @@ export default function HomePage() {
               ].map((m) => (
                 <div
                   key={m.nome}
-                  className={`rounded-2xl p-4 border border-slate-100 bg-slate-50 hover:shadow-sm transition`}
+                  className="bg-white border border-slate-100 rounded-2xl p-4 hover:shadow-sm transition"
                 >
                   <span
                     className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold mb-2 ${m.cor}`}
@@ -227,8 +231,8 @@ export default function HomePage() {
                     {m.nome}
                   </span>
                   <p className="text-xs text-gray-600">
-                    Em breve, esta área será alimentada pelos próprios líderes
-                    de cada ministério.
+                    Em breve, cada ministério terá uma página própria, atualizada
+                    pelos líderes.
                   </p>
                 </div>
               ))}
@@ -236,53 +240,83 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* EVENTOS (placeholder) */}
-        <section id="eventos" className="py-12 md:py-16">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h2 className="text-2xl md:text-3xl font-bold">
-                  Próximos eventos
-                </h2>
-                <p className="text-sm text-gray-600 mt-1">
-                  Em breve, esta seção será carregada automaticamente do
-                  Supabase com os eventos da igreja.
-                </p>
-              </div>
-              <Link
-                href="/eventos"
-                className="hidden md:inline-block text-sm text-primary hover:underline"
+        {/* ASSISTIR ONLINE */}
+        <section
+          id="online"
+          className="py-12 md:py-16 bg-white border-y border-slate-100"
+        >
+          <div className="max-w-6xl mx-auto px-4 grid gap-8 md:grid-cols-2 items-center">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">
+                Assista aos cultos online
+              </h2>
+              <p className="text-sm text-gray-600 mb-4">
+                Quando não puder estar presencialmente, acompanhe nossos cultos
+                e mensagens pela internet.
+              </p>
+              <p className="text-sm text-gray-700 mb-4">
+                Em breve, esta área será integrada com o canal oficial da
+                igreja no YouTube ou outra plataforma de transmissão.
+              </p>
+
+              <a
+                href="#"
+                className="inline-flex rounded-full px-6 py-2.5 text-sm font-semibold bg-primary text-white hover:bg-primary/90 transition shadow-sm"
               >
-                Ver agenda completa
-              </Link>
+                Ir para o canal da igreja
+              </a>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-3">
-              {[1, 2, 3].map((i) => (
-                <article
-                  key={i}
-                  className="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm"
-                >
-                  <p className="text-xs text-gray-500 mb-1">
-                    Data exemplo – ajuste depois
-                  </p>
-                  <h3 className="font-semibold text-gray-900 mb-1">
-                    Evento especial {i}
-                  </h3>
-                  <p className="text-sm text-gray-700 mb-3">
-                    Descrição ilustrativa do evento. Em breve isso virá do
-                    banco de dados.
-                  </p>
-                  <span className="inline-flex text-xs px-3 py-1 rounded-full bg-primary/10 text-primary font-semibold">
-                    Presencial
-                  </span>
-                </article>
-              ))}
+            <div className="aspect-video bg-slate-200 rounded-3xl flex items-center justify-center text-xs text-gray-500">
+              Área para player / embed de vídeo
             </div>
           </div>
         </section>
 
-        {/* CONTATO */}
+        {/* PRÓXIMOS PASSOS */}
+        <section id="agenda" className="py-12 md:py-16 bg-slate-50">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold mb-2">
+                Próximos passos na sua caminhada
+              </h2>
+              <p className="text-sm text-gray-600 max-w-2xl mx-auto">
+                Queremos caminhar com você em cada etapa: desde conhecer Jesus,
+                até servir e liderar outras pessoas.
+              </p>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-4 text-sm">
+              <div className="bg-white border border-slate-100 rounded-2xl p-4">
+                <h3 className="font-semibold mb-1">Conhecer Jesus</h3>
+                <p className="text-xs text-gray-600">
+                  Entenda o que significa seguir a Cristo e viver uma nova
+                  vida.
+                </p>
+              </div>
+              <div className="bg-white border border-slate-100 rounded-2xl p-4">
+                <h3 className="font-semibold mb-1">Batismo</h3>
+                <p className="text-xs text-gray-600">
+                  Saiba mais sobre o batismo nas águas e como se preparar.
+                </p>
+              </div>
+              <div className="bg-white border border-slate-100 rounded-2xl p-4">
+                <h3 className="font-semibold mb-1">Células & Grupos</h3>
+                <p className="text-xs text-gray-600">
+                  Conecte-se em pequenos grupos e cresça em comunhão.
+                </p>
+              </div>
+              <div className="bg-white border border-slate-100 rounded-2xl p-4">
+                <h3 className="font-semibold mb-1">Servir</h3>
+                <p className="text-xs text-gray-600">
+                  Descubra onde você pode servir usando seus dons e talentos.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CONTATO & LÍDERES */}
         <section
           id="contato"
           className="py-12 md:py-16 bg-slate-900 text-slate-100"
@@ -293,10 +327,10 @@ export default function HomePage() {
                 Localização & Contato
               </h2>
               <p className="text-sm text-slate-200 mb-3">
-                Fale com a secretaria da igreja ou faça-nos uma visita.
+                Venha nos visitar ou fale com a nossa equipe.
               </p>
 
-              <ul className="text-sm space-y-2 text-slate-200">
+              <ul className="text-sm space-y-2 text-slate-200 mb-4">
                 <li>📍 Rua Exemplo, 123 – Bairro Tal, Redenção / PA</li>
                 <li>📞 (00) 00000-0000</li>
                 <li>📧 contato@ieqcdf.com.br</li>
@@ -305,44 +339,19 @@ export default function HomePage() {
 
             <div className="bg-slate-800/70 rounded-3xl border border-slate-700 p-6 flex flex-col gap-3">
               <h3 className="text-lg font-semibold">
-                Fale com a secretaria da igreja
+                Área exclusiva para líderes
               </h3>
               <p className="text-sm text-slate-200">
-                Aqui você pode colocar um link direto para o WhatsApp oficial
-                da igreja ou um formulário de contato.
+                Líderes de ministérios acessam o painel para publicar eventos,
+                avisos e conteúdos específicos.
               </p>
               <Link
-                href="/contato"
+                href="/login"
                 className="mt-2 inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-semibold bg-primary text-white hover:bg-primary/90 transition"
               >
-                Ir para a página de contato
+                Entrar na área de líderes
               </Link>
             </div>
-          </div>
-        </section>
-
-        {/* ÁREA DOS LÍDERES */}
-        <section
-          id="lideres"
-          className="py-10 bg-white border-t border-slate-100"
-        >
-          <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div>
-              <h2 className="text-xl md:text-2xl font-bold mb-1">
-                Área exclusiva para líderes
-              </h2>
-              <p className="text-sm text-gray-600 max-w-xl">
-                Líderes de ministérios acessam aqui o painel para publicar
-                eventos, avisos e conteúdos específicos do seu ministério.
-              </p>
-            </div>
-
-            <Link
-              href="/login"
-              className="rounded-full px-6 py-2.5 text-sm font-semibold bg-primary text-white hover:bg-primary/90 transition shadow-sm"
-            >
-              Entrar na área de líderes
-            </Link>
           </div>
         </section>
       </div>
