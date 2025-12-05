@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import PrivateRoute from "@/components/PrivateRoute";
 
@@ -13,9 +14,10 @@ export default function Page() {
 }
 
 function EventosAdmin() {
+  const router = useRouter();
   const [eventos, setEventos] = useState([]);
   const [carregando, setCarregando] = useState(true);
-  const [confirmando, setConfirmando] = useState(null); // guarda o id do evento que o usuário quer excluir
+  const [confirmando, setConfirmando] = useState(null);
 
   // 🔹 Buscar eventos
   const buscarEventos = async () => {
@@ -25,8 +27,11 @@ function EventosAdmin() {
       .select("*")
       .order("data_evento", { ascending: true });
 
-    if (error) console.error(error);
-    else setEventos(data);
+    if (error) {
+      console.error("Erro ao buscar eventos:", error);
+    } else {
+      setEventos(data);
+    }
 
     setCarregando(false);
   };
@@ -37,15 +42,46 @@ function EventosAdmin() {
 
   // 🔹 Excluir evento
   const excluirEvento = async (id) => {
-    const { error } = await supabase.from("eventos").delete().eq("id", id);
-    if (error) {
-      console.error(error);
-      alert("Erro ao excluir o evento.");
-    } else {
-      alert("Evento excluído com sucesso!");
-      buscarEventos(); // atualiza a listagem
+    try {
+      console.log("Tentando excluir evento ID:", id);
+
+      // Buscar imagem antes de excluir
+      const { data: evento, error: buscaError } = await supabase
+        .from("eventos")
+        .select("imagem_url")
+        .eq("id", id)
+        .single();
+
+      if (buscaError) throw buscaError;
+
+      // Remover imagem se existir
+      if (evento?.imagem_url) {
+        const caminho = evento.imagem_url.split("/uploads/")[1];
+        if (caminho) {
+          const { error: storageError } = await supabase.storage
+            .from("uploads")
+            .remove([caminho]);
+          if (storageError)
+            console.warn("Erro ao remover imagem:", storageError);
+        }
+      }
+
+      // Excluir registro do banco
+      const { error: deleteError } = await supabase
+        .from("eventos")
+        .delete()
+        .eq("id", id);
+
+      if (deleteError) throw deleteError;
+
+      alert("✅ Evento excluído com sucesso!");
+      buscarEventos(); // atualiza a lista
+    } catch (err) {
+      console.error("Erro ao excluir evento:", err);
+      alert("❌ Erro ao excluir evento. Verifique o console.");
+    } finally {
+      setConfirmando(null);
     }
-    setConfirmando(null);
   };
 
   if (carregando) {
@@ -57,7 +93,7 @@ function EventosAdmin() {
   }
 
   return (
-    <main className="max-w-5xl mx-auto mt-10 p-4">
+    <main className="max-w-5xl mx-auto mt-10 p-4 relative">
       <h1 className="text-3xl font-bold text-primary mb-6 text-center">
         Gerenciar Eventos
       </h1>
@@ -95,17 +131,18 @@ function EventosAdmin() {
 
                 <div className="flex gap-2">
                   <button
-                    onClick={() =>
-                      window.location.assign(`/eventos/editar/${evento.id}`)
-                    }
-                    className="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600"
+                    onClick={() => router.push(`/eventos/editar/${evento.id}`)}
+                    className="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 transition"
                   >
                     Editar
                   </button>
 
                   <button
-                    onClick={() => setConfirmando(evento.id)}
-                    className="bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700"
+                    onClick={() => {
+                      console.log("Clicou em excluir:", evento.id);
+                      setConfirmando(evento.id);
+                    }}
+                    className="bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700 transition"
                   >
                     Excluir
                   </button>
@@ -126,13 +163,13 @@ function EventosAdmin() {
             <div className="flex justify-center gap-4">
               <button
                 onClick={() => excluirEvento(confirmando)}
-                className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
+                className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition"
               >
                 Sim
               </button>
               <button
                 onClick={() => setConfirmando(null)}
-                className="bg-gray-300 px-4 py-2 rounded-md hover:bg-gray-400"
+                className="bg-gray-300 px-4 py-2 rounded-md hover:bg-gray-400 transition"
               >
                 Cancelar
               </button>
