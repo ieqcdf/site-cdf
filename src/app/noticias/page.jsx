@@ -1,78 +1,66 @@
-"use client";
+import Link from "next/link";
+import { createClient } from "@supabase/supabase-js";
 
-import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+);
 
-export default function NoticiasPage() {
-  const [eventos, setEventos] = useState([]);
-  const [carregando, setCarregando] = useState(true);
-
-  useEffect(() => {
-    async function carregarEventos() {
-      const { data, error } = await supabase
-        .from("eventos")
-        .select("*")
-        .order("data_evento", { ascending: false })
-        .limit(6);
-
-      if (error) console.error("Erro ao buscar eventos:", error);
-      else setEventos(data);
-
-      setCarregando(false);
-    }
-
-    carregarEventos();
-  }, []);
-
-  if (carregando) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <p className="text-gray-600 text-lg">Carregando notícias...</p>
-      </div>
-    );
+function formatDateBR(iso) {
+  try {
+    return new Date(iso).toLocaleDateString("pt-BR");
+  } catch {
+    return "";
   }
+}
+
+export default async function NoticiasPage() {
+  const { data: noticias, error } = await supabase
+    .from("noticias")
+    .select("id, titulo, resumo, categoria, criado_em")
+    .eq("publicado", true)
+    .order("criado_em", { ascending: false })
+    .limit(50);
 
   return (
-    <main className="min-h-screen bg-gray-50 py-10">
-      <div className="max-w-6xl mx-auto px-4">
-        <h1 className="text-3xl font-bold text-center text-primary mb-8">
-          🕊️ Mural de Notícias e Eventos
-        </h1>
+    <main style={{ padding: 24, maxWidth: 1100, margin: "0 auto" }}>
+      <h1 style={{ fontSize: 30, fontWeight: 900 }}>Notícias</h1>
+      <p style={{ marginTop: 8, color: "#555" }}>
+        Acompanhe os acontecimentos da Catedral da Família.
+      </p>
 
-        {eventos.length === 0 ? (
-          <p className="text-center text-gray-500">
-            Nenhum evento cadastrado ainda.
-          </p>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {eventos.map((evento) => (
-              <div
-                key={evento.id}
-                className="bg-white rounded-xl shadow-md hover:shadow-lg transition overflow-hidden"
-              >
-                {evento.imagem_url && (
-                  <img
-                    src={evento.imagem_url}
-                    alt={evento.titulo}
-                    className="w-full h-48 object-cover"
-                  />
-                )}
-                <div className="p-4">
-                  <h2 className="text-xl font-semibold text-primary mb-1">
-                    {evento.titulo}
-                  </h2>
-                  <p className="text-gray-600 text-sm mb-2 line-clamp-2">
-                    {evento.descricao}
-                  </p>
-                  <p className="text-gray-500 text-sm">
-                    📅 {new Date(evento.data_evento).toLocaleDateString("pt-BR")}
-                    {evento.horario && ` • 🕒 ${evento.horario}`}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+      {error ? (
+        <div style={{ marginTop: 16, padding: 12, background: "#fee2e2", borderRadius: 12 }}>
+          Erro ao carregar notícias: {error.message}
+        </div>
+      ) : null}
+
+      <div style={{ marginTop: 22, display: "grid", gap: 14 }}>
+        {(noticias || []).map((n) => (
+          <Link
+            key={n.id}
+            href={`/noticias/${n.id}`}
+            style={{
+              display: "block",
+              padding: 16,
+              border: "1px solid #eee",
+              borderRadius: 14,
+              textDecoration: "none",
+              color: "inherit",
+              background: "white",
+            }}
+          >
+            <div style={{ display: "flex", gap: 10, alignItems: "baseline" }}>
+              <span style={{ fontSize: 12, color: "#b91c1c", fontWeight: 800, textTransform: "uppercase" }}>
+                {n.categoria || "geral"}
+              </span>
+              <span style={{ fontSize: 12, color: "#777" }}>{formatDateBR(n.criado_em)}</span>
+            </div>
+
+            <h2 style={{ marginTop: 8, fontSize: 18, fontWeight: 900 }}>{n.titulo}</h2>
+            {n.resumo ? <p style={{ marginTop: 8, color: "#444" }}>{n.resumo}</p> : null}
+          </Link>
+        ))}
       </div>
     </main>
   );
