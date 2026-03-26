@@ -1,69 +1,79 @@
-import Link from "next/link";
 import Image from "next/image";
 import Button from "@/components/ui/Button";
 
 export default function HomePage() {
+  const ministerios = [
+    "Louvor",
+    "Juventude",
+    "Ministério Infantil",
+    "Mulheres",
+    "Homens",
+    "Dança",
+    "Diaconato",
+    "AME",
+    "MQM",
+    "Esperança",
+  ];
+
   return (
-    <main className="min-h-screen bg-slate-50 text-gray-900 flex flex-col">
+    <main className="min-h-screen bg-brand-paper text-gray-900 flex flex-col">
       {/* HEADER */}
-      <header className="bg-brand-night text-white border-b border-white/10">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
-          {/* Logo + nome */}
-          <div className="flex items-center gap-3">
-            <div className="relative h-10 w-10 md:h-12 md:w-12">
-              <Image
-                src="/logo-quadrangular.png" // ajuste o nome do arquivo se for outro
-                alt="Igreja do Evangelho Quadrangular"
-                fill
-                className="object-contain"
-                priority
-              />
-            </div>
-            <div className="leading-tight">
-              <p className="text-xs font-semibold tracking-wide text-primary uppercase">
-                Igreja do Evangelho Quadrangular
-              </p>
-              <p className="text-[11px] text-gray-500">
-                Catedral da Família · Redenção / PA
-              </p>
-            </div>
-          </div>
+      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-brand-gold/20 shadow-sm">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="flex items-center justify-between gap-4 py-4">
+            <a href="#inicio" className="flex items-center gap-3 min-w-0">
+              <div className="relative h-11 w-11 md:h-12 md:w-12 shrink-0">
+                <Image
+                  src="/logo-catedral.png"
+                  alt="Catedral da Família"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
 
-          {/* Menu desktop */}
-          <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-            <a href="#inicio" className="hover:text-primary transition">
-              Início
+              <div className="leading-tight min-w-0">
+                <p className="text-[11px] md:text-xs font-semibold tracking-[0.18em] text-brand-ink uppercase truncate">
+                  Igreja do Evangelho Quadrangular
+                </p>
+                <p className="text-[11px] text-brand-muted truncate">
+                  Catedral da Família · Redenção / PA
+                </p>
+              </div>
             </a>
-            <a href="#sobre" className="hover:text-primary transition">
-              Sobre
-            </a>
-            <a href="#ministerios" className="hover:text-primary transition">
-              Ministérios
-            </a>
-            <a href="#agenda" className="hover:text-primary transition">
-              Agenda
-            </a>
-            <a href="#contato" className="hover:text-primary transition">
-              Contato
-            </a>
-            <Button href="/login" variant="primary" className="ml-4">
-              Área dos Líderes
-            </Button>
-          </nav>
 
-          {/* Mobile: só botão login */}
-          <div className="md:hidden">
-            <Link
-              href="/login"
-              className="rounded-full px-4 py-1.5 text-xs font-semibold bg-primary text-white hover:bg-primary/90 transition shadow-sm"
-            >
-              Login
-            </Link>
+            <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-brand-ink">
+              <a href="#inicio" className="hover:text-brand-red transition">
+                Início
+              </a>
+              <a href="#sobre" className="hover:text-brand-red transition">
+                Sobre
+              </a>
+              <a href="#ministerios" className="hover:text-brand-red transition">
+                Ministérios
+              </a>
+              <a href="#agenda" className="hover:text-brand-red transition">
+                Agenda
+              </a>
+              <a href="#contato" className="hover:text-brand-red transition">
+                Contato
+              </a>
+
+              <Button href="/login" variant="gold" className="ml-2">
+                Área dos Líderes
+              </Button>
+            </nav>
+
+            <div className="md:hidden">
+              <Button href="/login" variant="gold">
+                Login
+              </Button>
+            </div>
           </div>
         </div>
 
-        {/* Faixa com as 4 cores */}
-        <div className="h-1 w-full flex">
+        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-brand-gold to-transparent opacity-80" />
+        <div className="h-[3px] w-full flex">
           <div className="flex-1 bg-quadrangular-red" />
           <div className="flex-1 bg-quadrangular-yellow" />
           <div className="flex-1 bg-quadrangular-blue" />
@@ -71,300 +81,269 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* CONTEÚDO */}
-      <div className="flex-1">
-        {/* HERO / WELCOME HOME */}
-        <section
-          id="inicio"
-          className="bg-gradient-to-b from-quadrangular-blue/10 via-slate-50 to-slate-50"
-        >
-          <div className="max-w-6xl mx-auto px-4 py-16 grid gap-10 md:grid-cols-2 items-center">
-            <div>
-              <p className="text-xs font-semibold text-primary mb-2 uppercase tracking-[0.25em]">
-                Bem-vindo à Catedral da Família
-              </p>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 leading-tight">
-                Um lugar para{" "}
-                <span className="text-primary">pertencer, crer e crescer</span>{" "}
-                em Jesus.
-              </h1>
-              <p className="text-gray-700 mb-6 max-w-lg">
-                Somos uma igreja para toda a família, comprometida em pregar o
-                Evangelho Quadrangular e viver o amor de Cristo em Redenção.
-                Você é muito bem-vindo aqui.
-              </p>
+      {/* HERO */}
+      <section
+        id="inicio"
+        className="bg-gradient-to-b from-brand-gold/10 via-white to-brand-paper"
+      >
+        <div className="max-w-6xl mx-auto px-4 py-16 md:py-20 grid gap-10 md:grid-cols-2 items-center">
+          <div>
+            <p className="text-xs font-semibold text-brand-red mb-3 uppercase tracking-[0.25em]">
+              Bem-vindo à Catedral da Família
+            </p>
 
-              <div className="flex flex-wrap gap-3">
-                <a
-                  href="#junte-se"
-                  className="rounded-full px-6 py-2.5 text-sm font-semibold bg-primary text-white hover:bg-primary/90 transition shadow-sm"
-                >
-                  Junte-se a nós neste domingo
-                </a>
-                <a
-                  href="#online"
-                  className="rounded-full px-6 py-2.5 text-sm font-semibold border border-primary/40 text-primary hover:bg-primary/5 transition"
-                >
-                  Assistir online
-                </a>
-              </div>
+            <h1 className="text-4xl md:text-5xl font-extrabold mb-5 leading-tight">
+              Um lugar para{" "}
+              <span className="text-brand-red">pertencer, crer e crescer</span>{" "}
+              em Jesus.
+            </h1>
+
+            <p className="text-gray-700 mb-8 max-w-xl text-base md:text-lg">
+              Somos uma igreja para toda a família, comprometida em pregar o
+              Evangelho Quadrangular e viver o amor de Cristo em Redenção.
+              Você é muito bem-vindo aqui.
+            </p>
+
+            <div className="flex flex-wrap gap-4">
+              <Button href="#agenda" variant="primary">
+                Junte-se a nós neste domingo
+              </Button>
+
+              <Button href="#online" variant="outline">
+                Assistir online
+              </Button>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-3xl shadow-soft p-6 md:p-8 border border-brand-line">
+            <h2 className="text-xl font-semibold mb-5 text-brand-ink">
+              Próximos cultos
+            </h2>
+
+            <ul className="space-y-4 text-sm text-gray-700">
+              <li className="flex items-center justify-between gap-4">
+                <span>Culto de Celebração</span>
+                <span className="font-semibold text-brand-red">
+                  Domingo · 19h30
+                </span>
+              </li>
+              <li className="flex items-center justify-between gap-4">
+                <span>Culto da Família</span>
+                <span className="font-semibold text-brand-red">
+                  Quarta · 19h30
+                </span>
+              </li>
+              <li className="flex items-center justify-between gap-4">
+                <span>Reunião de Oração</span>
+                <span className="font-semibold text-brand-red">
+                  Consulte a agenda
+                </span>
+              </li>
+            </ul>
+
+            <div className="mt-6 rounded-2xl bg-brand-gold/10 border border-brand-gold/20 p-4 text-sm text-brand-ink">
+              Um ambiente de fé, comunhão, louvor e Palavra para toda a família.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SOBRE */}
+      <section id="sobre" className="py-16 bg-white">
+        <div className="max-w-6xl mx-auto px-4 grid gap-10 md:grid-cols-2 items-start">
+          <div>
+            <p className="text-xs font-semibold text-brand-red mb-2 uppercase tracking-[0.22em]">
+              Sobre nós
+            </p>
+            <h2 className="text-3xl font-bold mb-4">
+              Uma igreja centrada em Cristo e voltada para a família
+            </h2>
+            <p className="text-gray-700 mb-4 leading-relaxed">
+              A Catedral da Família em Redenção existe para anunciar Jesus
+              Cristo, acolher pessoas, fortalecer lares e formar discípulos.
+              Queremos ser uma igreja viva, bíblica, amorosa e relevante para a
+              cidade.
+            </p>
+            <p className="text-gray-700 leading-relaxed">
+              Aqui você encontra comunhão, ensino da Palavra, oração, serviço e
+              oportunidades para crescer em todas as fases da vida.
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="rounded-2xl border border-brand-line bg-brand-paper p-5">
+              <h3 className="font-semibold mb-2 text-brand-ink">Missão</h3>
+              <p className="text-sm text-gray-600">
+                Alcançar vidas, discipular pessoas e servir famílias com amor e
+                excelência.
+              </p>
             </div>
 
-            <div className="bg-white rounded-3xl shadow-md p-6 border border-slate-100 flex flex-col gap-4">
-              <h2 className="text-lg font-semibold text-gray-900">
-                Próximos cultos
-              </h2>
-              <ul className="text-sm text-gray-700 space-y-2">
-                <li className="flex justify-between">
-                  <span>Culto de Celebração (Domingo)</span>
-                  <span className="font-semibold text-primary">19h30</span>
-                </li>
-                <li className="flex justify-between">
-                  <span>Culto da Família (Quarta)</span>
-                  <span className="font-semibold text-primary">19h30</span>
-                </li>
-                <li className="flex justify-between">
-                  <span>Reunião de Oração</span>
-                  <span className="font-semibold text-primary">
-                    Consulte a agenda
-                  </span>
-                </li>
-              </ul>
-              <p className="text-xs text-gray-500">
-                * Ajuste os horários acima de acordo com a programação oficial
-                da igreja.
+            <div className="rounded-2xl border border-brand-line bg-brand-paper p-5">
+              <h3 className="font-semibold mb-2 text-brand-ink">Visão</h3>
+              <p className="text-sm text-gray-600">
+                Ser uma igreja acolhedora, madura e comprometida com o Reino de
+                Deus.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-brand-line bg-brand-paper p-5 sm:col-span-2">
+              <h3 className="font-semibold mb-2 text-brand-ink">Valores</h3>
+              <p className="text-sm text-gray-600">
+                Fé, família, comunhão, serviço, santidade, discipulado e amor
+                ao próximo.
               </p>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* JUNTE-SE A NÓS DOMINGO (tipo “Join Us Sunday”) */}
-        <section
-          id="junte-se"
-          className="py-12 md:py-16 bg-white border-y border-slate-100"
-        >
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold mb-2">
-                Junte-se a nós neste fim de semana
-              </h2>
-              <p className="text-sm text-gray-600 max-w-2xl mx-auto">
-                Nossos cultos são momentos de adoração, ensino bíblico e
-                comunhão. Se você está começando na fé ou já caminha com Jesus
-                há anos, há um lugar para você aqui.
-              </p>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-3">
-              <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4">
-                <p className="text-xs text-gray-500 mb-1">Domingo</p>
-                <h3 className="font-semibold mb-1">Culto de Celebração</h3>
-                <p className="text-sm text-gray-700 mb-2">19h30</p>
-                <p className="text-xs text-gray-600">
-                  Louvor, Palavra e um tempo especial em família.
-                </p>
-              </div>
-
-              <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4">
-                <p className="text-xs text-gray-500 mb-1">Quarta-feira</p>
-                <h3 className="font-semibold mb-1">Culto da Família</h3>
-                <p className="text-sm text-gray-700 mb-2">19h30</p>
-                <p className="text-xs text-gray-600">
-                  Encontros para fortalecer lares e relacionamentos.
-                </p>
-              </div>
-
-              <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4">
-                <p className="text-xs text-gray-500 mb-1">Durante a semana</p>
-                <h3 className="font-semibold mb-1">Células & Ministérios</h3>
-                <p className="text-sm text-gray-700 mb-2">
-                  Horários variados
-                </p>
-                <p className="text-xs text-gray-600">
-                  Pequenos grupos e encontros específicos de cada ministério.
-                </p>
-              </div>
-            </div>
+      {/* MINISTÉRIOS */}
+      <section id="ministerios" className="py-16 bg-brand-paper border-y border-brand-line">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-10">
+            <p className="text-xs font-semibold text-brand-red mb-2 uppercase tracking-[0.22em]">
+              Ministérios
+            </p>
+            <h2 className="text-3xl font-bold mb-3">
+              Ministérios da Catedral da Família
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Cada ministério expressa uma parte do cuidado de Deus com a
+              igreja. Sirva, cresça e caminhe conosco.
+            </p>
           </div>
-        </section>
 
-        {/* MINISTÉRIOS */}
-        <section id="ministerios" className="py-12 md:py-16 bg-slate-50">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h2 className="text-2xl md:text-3xl font-bold">
-                  Ministérios para toda a família
-                </h2>
-                <p className="text-sm text-gray-600 mt-1">
-                  Sirva, cresça e se conecte em um dos nossos ministérios.
-                </p>
-              </div>
-              <Link
-                href="/ministerios"
-                className="hidden md:inline-block text-sm text-primary hover:underline"
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {ministerios.map((nome) => (
+              <div
+                key={nome}
+                className="rounded-2xl border border-brand-line bg-white p-5 hover:shadow-soft transition"
               >
-                Ver todos os ministérios
-              </Link>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4 text-sm">
-              {[
-                { nome: "Louvor", cor: "bg-quadrangular-red/10 text-quadrangular-red" },
-                { nome: "Juventude", cor: "bg-quadrangular-blue/10 text-quadrangular-blue" },
-                { nome: "Ministério Infantil", cor: "bg-quadrangular-yellow/10 text-quadrangular-yellow" },
-                { nome: "Mulheres", cor: "bg-quadrangular-purple/10 text-quadrangular-purple" },
-                { nome: "Homens", cor: "bg-quadrangular-red/10 text-quadrangular-red" },
-                { nome: "Dança", cor: "bg-quadrangular-purple/10 text-quadrangular-purple" },
-                { nome: "Diaconato & Recepção", cor: "bg-quadrangular-blue/10 text-quadrangular-blue" },
-                { nome: "AME / MQM", cor: "bg-quadrangular-yellow/10 text-quadrangular-yellow" },
-              ].map((m) => (
-                <div
-                  key={m.nome}
-                  className="bg-white border border-slate-100 rounded-2xl p-4 hover:shadow-sm transition"
-                >
-                  <span
-                    className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold mb-2 ${m.cor}`}
-                  >
-                    {m.nome}
-                  </span>
-                  <p className="text-xs text-gray-600">
-                    Em breve, cada ministério terá uma página própria, atualizada
-                    pelos líderes.
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ASSISTIR ONLINE */}
-        <section
-          id="online"
-          className="py-12 md:py-16 bg-white border-y border-slate-100"
-        >
-          <div className="max-w-6xl mx-auto px-4 grid gap-8 md:grid-cols-2 items-center">
-            <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-3">
-                Assista aos cultos online
-              </h2>
-              <p className="text-sm text-gray-600 mb-4">
-                Quando não puder estar presencialmente, acompanhe nossos cultos
-                e mensagens pela internet.
-              </p>
-              <p className="text-sm text-gray-700 mb-4">
-                Em breve, esta área será integrada com o canal oficial da
-                igreja no YouTube ou outra plataforma de transmissão.
-              </p>
-
-              <a
-                href="#"
-                className="inline-flex rounded-full px-6 py-2.5 text-sm font-semibold bg-primary text-white hover:bg-primary/90 transition shadow-sm"
-              >
-                Ir para o canal da igreja
-              </a>
-            </div>
-
-            <div className="aspect-video bg-slate-200 rounded-3xl flex items-center justify-center text-xs text-gray-500">
-              Área para player / embed de vídeo
-            </div>
-          </div>
-        </section>
-
-        {/* PRÓXIMOS PASSOS */}
-        <section id="agenda" className="py-12 md:py-16 bg-slate-50">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold mb-2">
-                Próximos passos na sua caminhada
-              </h2>
-              <p className="text-sm text-gray-600 max-w-2xl mx-auto">
-                Queremos caminhar com você em cada etapa: desde conhecer Jesus,
-                até servir e liderar outras pessoas.
-              </p>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-4 text-sm">
-              <div className="bg-white border border-slate-100 rounded-2xl p-4">
-                <h3 className="font-semibold mb-1">Conhecer Jesus</h3>
-                <p className="text-xs text-gray-600">
-                  Entenda o que significa seguir a Cristo e viver uma nova
-                  vida.
+                <h3 className="font-semibold text-brand-ink mb-2">{nome}</h3>
+                <p className="text-sm text-gray-600">
+                  Em breve, cada ministério terá sua própria área com conteúdos,
+                  eventos e avisos.
                 </p>
               </div>
-              <div className="bg-white border border-slate-100 rounded-2xl p-4">
-                <h3 className="font-semibold mb-1">Batismo</h3>
-                <p className="text-xs text-gray-600">
-                  Saiba mais sobre o batismo nas águas e como se preparar.
-                </p>
-              </div>
-              <div className="bg-white border border-slate-100 rounded-2xl p-4">
-                <h3 className="font-semibold mb-1">Células & Grupos</h3>
-                <p className="text-xs text-gray-600">
-                  Conecte-se em pequenos grupos e cresça em comunhão.
-                </p>
-              </div>
-              <div className="bg-white border border-slate-100 rounded-2xl p-4">
-                <h3 className="font-semibold mb-1">Servir</h3>
-                <p className="text-xs text-gray-600">
-                  Descubra onde você pode servir usando seus dons e talentos.
-                </p>
-              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ONLINE */}
+      <section id="online" className="py-16 bg-white">
+        <div className="max-w-6xl mx-auto px-4 grid gap-10 md:grid-cols-2 items-center">
+          <div>
+            <p className="text-xs font-semibold text-brand-red mb-2 uppercase tracking-[0.22em]">
+              Cultos online
+            </p>
+            <h2 className="text-3xl font-bold mb-4">
+              Acompanhe também pela internet
+            </h2>
+            <p className="text-gray-700 mb-6 leading-relaxed">
+              Quando não puder estar presencialmente, acompanhe nossas
+              transmissões e mensagens online. Em breve, esta área será
+              integrada com o canal oficial da igreja.
+            </p>
+
+            <Button href="#" variant="primary">
+              Ir para o canal oficial
+            </Button>
+          </div>
+
+          <div className="aspect-video rounded-3xl border border-brand-line bg-slate-100 flex items-center justify-center text-sm text-gray-500">
+            Área para player de vídeo
+          </div>
+        </div>
+      </section>
+
+      {/* AGENDA */}
+      <section id="agenda" className="py-16 bg-brand-paper border-y border-brand-line">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-10">
+            <p className="text-xs font-semibold text-brand-red mb-2 uppercase tracking-[0.22em]">
+              Próximos passos
+            </p>
+            <h2 className="text-3xl font-bold mb-3">
+              Caminhe conosco em cada etapa
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Queremos te ajudar a crescer em fé, comunhão e serviço.
+            </p>
+          </div>
+
+          <div className="grid gap-5 md:grid-cols-4">
+            <div className="rounded-2xl bg-white border border-brand-line p-5">
+              <h3 className="font-semibold mb-2">Conhecer Jesus</h3>
+              <p className="text-sm text-gray-600">
+                Entenda o Evangelho e descubra o propósito de Deus para sua
+                vida.
+              </p>
+            </div>
+
+            <div className="rounded-2xl bg-white border border-brand-line p-5">
+              <h3 className="font-semibold mb-2">Batismo</h3>
+              <p className="text-sm text-gray-600">
+                Saiba mais sobre o batismo nas águas e como se preparar.
+              </p>
+            </div>
+
+            <div className="rounded-2xl bg-white border border-brand-line p-5">
+              <h3 className="font-semibold mb-2">Células & Grupos</h3>
+              <p className="text-sm text-gray-600">
+                Conecte-se com pessoas e cresça em comunhão durante a semana.
+              </p>
+            </div>
+
+            <div className="rounded-2xl bg-white border border-brand-line p-5">
+              <h3 className="font-semibold mb-2">Servir</h3>
+              <p className="text-sm text-gray-600">
+                Descubra onde você pode servir com seus dons e talentos.
+              </p>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* CONTATO & LÍDERES */}
-        <section
-          id="contato"
-          className="py-12 md:py-16 bg-slate-900 text-slate-100"
-        >
-          <div className="max-w-6xl mx-auto px-4 grid gap-10 md:grid-cols-2">
-            <div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">
-                Localização & Contato
-              </h2>
-              <p className="text-sm text-slate-200 mb-3">
-                Venha nos visitar ou fale com a nossa equipe.
-              </p>
-
-              <ul className="text-sm space-y-2 text-slate-200 mb-4">
-                <li>📍 Rua Exemplo, 123 – Bairro Tal, Redenção / PA</li>
-                <li>📞 (00) 00000-0000</li>
-                <li>📧 contato@ieqcdf.com.br</li>
-              </ul>
-            </div>
-
-            <div className="bg-slate-800/70 rounded-3xl border border-slate-700 p-6 flex flex-col gap-3">
-              <h3 className="text-lg font-semibold">
-                Área exclusiva para líderes
-              </h3>
-              <p className="text-sm text-slate-200">
-                Líderes de ministérios acessam o painel para publicar eventos,
-                avisos e conteúdos específicos.
-              </p>
-              <Link
-                href="/login"
-                className="mt-2 inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-semibold bg-primary text-white hover:bg-primary/90 transition"
-              >
-                Entrar na área de líderes
-              </Link>
-            </div>
+      {/* CONTATO */}
+      <section id="contato" className="py-16 bg-brand-night text-white">
+        <div className="max-w-6xl mx-auto px-4 grid gap-10 md:grid-cols-2 items-start">
+          <div>
+            <p className="text-xs font-semibold text-brand-gold mb-2 uppercase tracking-[0.22em]">
+              Contato
+            </p>
+            <h2 className="text-3xl font-bold mb-4">
+              Venha nos visitar ou fale com a nossa equipe
+            </h2>
+            <ul className="space-y-3 text-sm text-white/80">
+              <li>📍 Rua Ademar Guimarães, 455 – Núcleo Urbano, Redenção / PA</li>
+              <li>📞 (94) 99119-2038</li>
+              <li>📧 ieq.cdf@gmail.com</li>
+            </ul>
           </div>
-        </section>
-      </div>
+
+          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
+            <h3 className="text-xl font-semibold mb-3">Área dos líderes</h3>
+            <p className="text-sm text-white/75 mb-5">
+              Líderes de ministérios acessam o painel para publicar eventos,
+              avisos e conteúdos específicos.
+            </p>
+            <Button href="/login" variant="gold">
+              Entrar na área de líderes
+            </Button>
+          </div>
+        </div>
+      </section>
 
       {/* FOOTER */}
-      <footer className="border-t bg-white">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-gray-500">
+      <footer className="bg-white border-t border-brand-line">
+        <div className="max-w-6xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-brand-muted">
           <span>
-            © {new Date().getFullYear()} Igreja do Evangelho Quadrangular –
+            © {new Date().getFullYear()} Igreja do Evangelho Quadrangular - Catedral da Familia –
             Redenção. Todos os direitos reservados.
           </span>
-          <span className="text-[11px]">
-            Desenvolvido por Habeck System · Painel para líderes em
-            desenvolvimento.
-          </span>
+          <span>Desenvolvido por Habeck System</span>
         </div>
       </footer>
     </main>

@@ -1,7 +1,28 @@
 import Image from "next/image";
 import Button from "@/components/ui/Button";
 
-export default function HomePage() {
+async function getYoutubeVideos() {
+  try {
+    const baseUrl =
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      "http://localhost:3000";
+
+    const res = await fetch(`${baseUrl}/api/youtube/videos`, {
+      next: { revalidate: 3600 },
+    });
+
+    if (!res.ok) {
+      return [];
+    }
+
+    const json = await res.json();
+    return json?.videos || [];
+  } catch {
+    return [];
+  }
+}
+
+export default async function HomePage() {
   const ministerios = [
     "Louvor",
     "Juventude",
@@ -15,9 +36,12 @@ export default function HomePage() {
     "Esperança",
   ];
 
+  const videos = await getYoutubeVideos();
+  const videoPrincipal = videos[0] || null;
+  const videoSecundario = videos[1] || null;
+
   return (
     <main className="min-h-screen bg-brand-paper text-gray-900 flex flex-col">
-      {/* HEADER */}
       <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-brand-gold/20 shadow-sm">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex items-center justify-between gap-4 py-4">
@@ -46,17 +70,17 @@ export default function HomePage() {
               <a href="#inicio" className="hover:text-brand-red transition">
                 Início
               </a>
-              <a href="#sobre" className="hover:text-brand-red transition">
-                Sobre
+              <a href="#sabedoria" className="hover:text-brand-red transition">
+                Sabedoria Cristã
+              </a>
+              <a href="#online" className="hover:text-brand-red transition">
+                Cultos online
               </a>
               <a href="#ministerios" className="hover:text-brand-red transition">
                 Ministérios
               </a>
-              <a href="#agenda" className="hover:text-brand-red transition">
-                Agenda
-              </a>
-              <a href="#contato" className="hover:text-brand-red transition">
-                Contato
+              <a href="#sobre" className="hover:text-brand-red transition">
+                Sobre
               </a>
 
               <Button href="/login" variant="gold" className="ml-2">
@@ -81,7 +105,6 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* HERO */}
       <section
         id="inicio"
         className="bg-gradient-to-b from-brand-gold/10 via-white to-brand-paper"
@@ -105,8 +128,8 @@ export default function HomePage() {
             </p>
 
             <div className="flex flex-wrap gap-4">
-              <Button href="#agenda" variant="primary">
-                Junte-se a nós neste domingo
+              <Button href="#sabedoria" variant="primary">
+                Sabedoria Cristã
               </Button>
 
               <Button href="#online" variant="outline">
@@ -148,8 +171,151 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SOBRE */}
-      <section id="sobre" className="py-16 bg-white">
+      <section id="sabedoria" className="py-16 bg-white border-y border-brand-line">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-10">
+            <p className="text-xs font-semibold text-brand-red mb-2 uppercase tracking-[0.22em]">
+              Sabedoria Cristã
+            </p>
+            <h2 className="text-3xl font-bold mb-3">
+              Palavra viva para fortalecer sua caminhada
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Os vídeos mais recentes do canal da igreja aparecem aqui
+              automaticamente para abençoar sua semana.
+            </p>
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-[2fr,1fr] items-start">
+            <div className="rounded-3xl border border-brand-line bg-brand-paper p-4 md:p-5 shadow-soft">
+              {videoPrincipal ? (
+                <>
+                  <div className="aspect-video rounded-2xl overflow-hidden bg-black">
+                    <iframe
+                      className="w-full h-full"
+                      src={`https://www.youtube.com/embed/${videoPrincipal.id}`}
+                      title={videoPrincipal.title}
+                      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
+                    />
+                  </div>
+
+                  <div className="mt-4">
+                    <h3 className="text-lg font-semibold text-brand-ink">
+                      {videoPrincipal.title}
+                    </h3>
+                  </div>
+                </>
+              ) : (
+                <div className="aspect-video rounded-2xl border border-dashed border-brand-line flex items-center justify-center text-sm text-gray-500">
+                  Vídeo principal em breve
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-4">
+              <div className="rounded-3xl border border-brand-line bg-brand-paper p-4 shadow-soft">
+                {videoSecundario ? (
+                  <>
+                    <div className="aspect-video rounded-2xl overflow-hidden bg-black">
+                      <iframe
+                        className="w-full h-full"
+                        src={`https://www.youtube.com/embed/${videoSecundario.id}`}
+                        title={videoSecundario.title}
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                      />
+                    </div>
+
+                    <div className="mt-3">
+                      <h4 className="text-sm font-semibold text-brand-ink">
+                        {videoSecundario.title}
+                      </h4>
+                    </div>
+                  </>
+                ) : (
+                  <div className="aspect-video rounded-2xl border border-dashed border-brand-line flex items-center justify-center text-sm text-gray-500">
+                    Segundo vídeo em breve
+                  </div>
+                )}
+              </div>
+
+              <Button
+                href="https://www.youtube.com/@catedraldafamilia.church"
+                variant="primary"
+                className="w-full"
+              >
+                Ir para o canal oficial
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="online" className="py-16 bg-brand-paper">
+        <div className="max-w-6xl mx-auto px-4 grid gap-10 md:grid-cols-2 items-center">
+          <div>
+            <p className="text-xs font-semibold text-brand-red mb-2 uppercase tracking-[0.22em]">
+              Cultos online
+            </p>
+            <h2 className="text-3xl font-bold mb-4">
+              Acompanhe também pela internet
+            </h2>
+            <p className="text-gray-700 mb-6 leading-relaxed">
+              Quando não puder estar presencialmente, acompanhe nossas
+              transmissões e mensagens online. Em breve, esta área será
+              integrada com o canal oficial da igreja.
+            </p>
+
+            <Button href="https://www.youtube.com/@catedraldafamilia.church" variant="primary">
+              Ir para o canal oficial
+            </Button>
+          </div>
+
+          <div className="aspect-video rounded-3xl border border-brand-line bg-slate-100 flex items-center justify-center text-sm text-gray-500">
+            Área para player de vídeo
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="ministerios"
+        className="py-16 bg-white border-y border-brand-line"
+      >
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-10">
+            <p className="text-xs font-semibold text-brand-red mb-2 uppercase tracking-[0.22em]">
+              Ministérios
+            </p>
+            <h2 className="text-3xl font-bold mb-3">
+              Ministérios da Catedral da Família
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Cada ministério expressa uma parte do cuidado de Deus com a
+              igreja. Sirva, cresça e caminhe conosco.
+            </p>
+          </div>
+
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {ministerios.map((nome) => (
+              <div
+                key={nome}
+                className="rounded-2xl border border-brand-line bg-brand-paper p-5 hover:shadow-soft transition"
+              >
+                <h3 className="font-semibold text-brand-ink mb-2">{nome}</h3>
+                <p className="text-sm text-gray-600">
+                  Em breve, cada ministério terá sua própria área com conteúdos,
+                  eventos e avisos.
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="sobre" className="py-16 bg-brand-paper">
         <div className="max-w-6xl mx-auto px-4 grid gap-10 md:grid-cols-2 items-start">
           <div>
             <p className="text-xs font-semibold text-brand-red mb-2 uppercase tracking-[0.22em]">
@@ -171,7 +337,7 @@ export default function HomePage() {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-2xl border border-brand-line bg-brand-paper p-5">
+            <div className="rounded-2xl border border-brand-line bg-white p-5">
               <h3 className="font-semibold mb-2 text-brand-ink">Missão</h3>
               <p className="text-sm text-gray-600">
                 Alcançar vidas, discipular pessoas e servir famílias com amor e
@@ -179,7 +345,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-brand-line bg-brand-paper p-5">
+            <div className="rounded-2xl border border-brand-line bg-white p-5">
               <h3 className="font-semibold mb-2 text-brand-ink">Visão</h3>
               <p className="text-sm text-gray-600">
                 Ser uma igreja acolhedora, madura e comprometida com o Reino de
@@ -187,7 +353,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-brand-line bg-brand-paper p-5 sm:col-span-2">
+            <div className="rounded-2xl border border-brand-line bg-white p-5 sm:col-span-2">
               <h3 className="font-semibold mb-2 text-brand-ink">Valores</h3>
               <p className="text-sm text-gray-600">
                 Fé, família, comunhão, serviço, santidade, discipulado e amor
@@ -198,150 +364,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* MINISTÉRIOS */}
-      <section id="ministerios" className="py-16 bg-brand-paper border-y border-brand-line">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-10">
-            <p className="text-xs font-semibold text-brand-red mb-2 uppercase tracking-[0.22em]">
-              Ministérios
-            </p>
-            <h2 className="text-3xl font-bold mb-3">
-              Ministérios da Catedral da Família
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Cada ministério expressa uma parte do cuidado de Deus com a
-              igreja. Sirva, cresça e caminhe conosco.
-            </p>
-          </div>
-
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {ministerios.map((nome) => (
-              <div
-                key={nome}
-                className="rounded-2xl border border-brand-line bg-white p-5 hover:shadow-soft transition"
-              >
-                <h3 className="font-semibold text-brand-ink mb-2">{nome}</h3>
-                <p className="text-sm text-gray-600">
-                  Em breve, cada ministério terá sua própria área com conteúdos,
-                  eventos e avisos.
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ONLINE */}
-      <section id="online" className="py-16 bg-white">
-        <div className="max-w-6xl mx-auto px-4 grid gap-10 md:grid-cols-2 items-center">
-          <div>
-            <p className="text-xs font-semibold text-brand-red mb-2 uppercase tracking-[0.22em]">
-              Cultos online
-            </p>
-            <h2 className="text-3xl font-bold mb-4">
-              Acompanhe também pela internet
-            </h2>
-            <p className="text-gray-700 mb-6 leading-relaxed">
-              Quando não puder estar presencialmente, acompanhe nossas
-              transmissões e mensagens online. Em breve, esta área será
-              integrada com o canal oficial da igreja.
-            </p>
-
-            <Button href="#" variant="primary">
-              Ir para o canal oficial
-            </Button>
-          </div>
-
-          <div className="aspect-video rounded-3xl border border-brand-line bg-slate-100 flex items-center justify-center text-sm text-gray-500">
-            Área para player de vídeo
-          </div>
-        </div>
-      </section>
-
-      {/* AGENDA */}
-      <section id="agenda" className="py-16 bg-brand-paper border-y border-brand-line">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-10">
-            <p className="text-xs font-semibold text-brand-red mb-2 uppercase tracking-[0.22em]">
-              Próximos passos
-            </p>
-            <h2 className="text-3xl font-bold mb-3">
-              Caminhe conosco em cada etapa
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Queremos te ajudar a crescer em fé, comunhão e serviço.
-            </p>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-4">
-            <div className="rounded-2xl bg-white border border-brand-line p-5">
-              <h3 className="font-semibold mb-2">Conhecer Jesus</h3>
-              <p className="text-sm text-gray-600">
-                Entenda o Evangelho e descubra o propósito de Deus para sua
-                vida.
-              </p>
-            </div>
-
-            <div className="rounded-2xl bg-white border border-brand-line p-5">
-              <h3 className="font-semibold mb-2">Batismo</h3>
-              <p className="text-sm text-gray-600">
-                Saiba mais sobre o batismo nas águas e como se preparar.
-              </p>
-            </div>
-
-            <div className="rounded-2xl bg-white border border-brand-line p-5">
-              <h3 className="font-semibold mb-2">Células & Grupos</h3>
-              <p className="text-sm text-gray-600">
-                Conecte-se com pessoas e cresça em comunhão durante a semana.
-              </p>
-            </div>
-
-            <div className="rounded-2xl bg-white border border-brand-line p-5">
-              <h3 className="font-semibold mb-2">Servir</h3>
-              <p className="text-sm text-gray-600">
-                Descubra onde você pode servir com seus dons e talentos.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CONTATO */}
-      <section id="contato" className="py-16 bg-brand-night text-white">
-        <div className="max-w-6xl mx-auto px-4 grid gap-10 md:grid-cols-2 items-start">
-          <div>
-            <p className="text-xs font-semibold text-brand-gold mb-2 uppercase tracking-[0.22em]">
-              Contato
-            </p>
-            <h2 className="text-3xl font-bold mb-4">
-              Venha nos visitar ou fale com a nossa equipe
-            </h2>
-            <ul className="space-y-3 text-sm text-white/80">
-              <li>📍 Rua Ademar Guimarães, 455 – Núcleo Urbano, Redenção / PA</li>
-              <li>📞 (94) 99119-2038</li>
-              <li>📧 ieq.cdf@gmail.com</li>
-            </ul>
-          </div>
-
-          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
-            <h3 className="text-xl font-semibold mb-3">Área dos líderes</h3>
-            <p className="text-sm text-white/75 mb-5">
-              Líderes de ministérios acessam o painel para publicar eventos,
-              avisos e conteúdos específicos.
-            </p>
-            <Button href="/login" variant="gold">
-              Entrar na área de líderes
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* FOOTER */}
       <footer className="bg-white border-t border-brand-line">
         <div className="max-w-6xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-brand-muted">
           <span>
-            © {new Date().getFullYear()} Igreja do Evangelho Quadrangular - Catedral da Familia –
-            Redenção. Todos os direitos reservados.
+            © {new Date().getFullYear()} Igreja do Evangelho Quadrangular -
+            Catedral da Familia – Redenção. Todos os direitos reservados.
           </span>
           <span>Desenvolvido por Habeck System</span>
         </div>
