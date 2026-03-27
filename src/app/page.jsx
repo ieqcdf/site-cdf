@@ -5,19 +5,49 @@ const YOUTUBE_CHANNEL_URL = "https://www.youtube.com/@catedraldafamilia.church";
 
 async function getYoutubeVideos() {
   try {
-    const baseUrl =
-      process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}` || "http://localhost:3000";
+    const apiKey = process.env.YOUTUBE_API_KEY;
+    const channelId = "UCBUnioC09aIVyYQ8Li1To3g";
 
-    const response = await fetch(`${baseUrl}/api/youtube/videos`, {
+    if (!apiKey) return [];
+
+    const channelUrl = new URL("https://www.googleapis.com/youtube/v3/channels");
+    channelUrl.searchParams.set("part", "contentDetails");
+    channelUrl.searchParams.set("id", channelId);
+    channelUrl.searchParams.set("key", apiKey);
+
+    const channelRes = await fetch(channelUrl.toString(), {
       next: { revalidate: 300 },
     });
 
-    if (!response.ok) {
-      return [];
-    }
+    if (!channelRes.ok) return [];
 
-    const json = await response.json();
-    return json?.videos || [];
+    const channelJson = await channelRes.json();
+    const playlistId =
+      channelJson?.items?.[0]?.contentDetails?.relatedPlaylists?.uploads;
+
+    if (!playlistId) return [];
+
+    const playlistUrl = new URL("https://www.googleapis.com/youtube/v3/playlistItems");
+    playlistUrl.searchParams.set("part", "snippet,contentDetails");
+    playlistUrl.searchParams.set("playlistId", playlistId);
+    playlistUrl.searchParams.set("maxResults", "2");
+    playlistUrl.searchParams.set("key", apiKey);
+
+    const playlistRes = await fetch(playlistUrl.toString(), {
+      next: { revalidate: 300 },
+    });
+
+    if (!playlistRes.ok) return [];
+
+    const playlistJson = await playlistRes.json();
+
+    return (
+      playlistJson?.items?.map((item) => ({
+        id: item?.contentDetails?.videoId,
+        title: item?.snippet?.title || "Vídeo",
+        description: item?.snippet?.description || "",
+      })) || []
+    );
   } catch {
     return [];
   }
