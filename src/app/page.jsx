@@ -55,17 +55,17 @@ async function getYoutubeVideos() {
 
 export default async function HomePage() {
   const ministerios = [
-    "Louvor",
-    "Juventude",
-    "Ministério Infantil",
-    "Mulheres",
-    "Homens",
-    "Dança",
-    "Diaconato",
-    "AME",
-    "MQM",
-    "Esperança",
-  ];
+  { nome: "Louvor", slug: "louvor" },
+  { nome: "Juventude", slug: "jovens" },
+  { nome: "Ministério Infantil", slug: "infantil" },
+  { nome: "Mulheres", slug: "mulheres" },
+  { nome: "Homens", slug: "homens" },
+  { nome: "Dança", slug: "danca" },
+  { nome: "Diaconato", slug: "diaconato" },
+  { nome: "AME", slug: "ame" },
+  { nome: "MQM", slug: "mqm" },
+  { nome: "Esperança", slug: "esperanca" },
+];
 
   const videos = await getYoutubeVideos();
   const videoPrincipal = videos[0] || null;
@@ -344,17 +344,19 @@ export default async function HomePage() {
           </div>
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {ministerios.map((nome) => (
-              <div
-                key={nome}
-                className="rounded-2xl border border-brand-line bg-brand-paper p-5 hover:shadow-soft transition"
+            {ministerios.map((ministerio) => (
+              <a
+                key={ministerio.slug}
+                href={`/ministerios/${ministerio.slug}`}
+                className="block rounded-2xl border border-brand-line bg-brand-paper p-5 hover:shadow-soft hover:-translate-y-1 transition"
               >
-                <h3 className="font-semibold text-brand-ink mb-2">{nome}</h3>
+                <h3 className="font-semibold text-brand-ink mb-2">
+                  {ministerio.nome}
+                </h3>
                 <p className="text-sm text-gray-600">
-                  Em breve, cada ministério terá sua própria área com conteúdos,
-                  eventos e avisos.
+                  Acesse a página do ministério para ver conteúdos, vídeos e avisos.
                 </p>
-              </div>
+              </a>
             ))}
           </div>
         </div>
