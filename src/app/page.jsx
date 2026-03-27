@@ -1,21 +1,22 @@
 import Image from "next/image";
 import Button from "@/components/ui/Button";
 
+const YOUTUBE_CHANNEL_URL = "https://www.youtube.com/@catedraldafamilia.church";
+
 async function getYoutubeVideos() {
   try {
     const baseUrl =
-      process.env.NEXT_PUBLIC_SITE_URL ||
-      "http://localhost:3000";
+      process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}` || "http://localhost:3000";
 
-    const res = await fetch(`${baseUrl}/api/youtube/videos`, {
-      next: { revalidate: 3600 },
+    const response = await fetch(`${baseUrl}/api/youtube/videos`, {
+      next: { revalidate: 300 },
     });
 
-    if (!res.ok) {
+    if (!response.ok) {
       return [];
     }
 
-    const json = await res.json();
+    const json = await response.json();
     return json?.videos || [];
   } catch {
     return [];
@@ -42,6 +43,7 @@ export default async function HomePage() {
 
   return (
     <main className="min-h-screen bg-brand-paper text-gray-900 flex flex-col">
+      {/* HEADER */}
       <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-brand-gold/20 shadow-sm">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex items-center justify-between gap-4 py-4">
@@ -105,6 +107,7 @@ export default async function HomePage() {
         </div>
       </header>
 
+      {/* BEM-VINDO */}
       <section
         id="inicio"
         className="bg-gradient-to-b from-brand-gold/10 via-white to-brand-paper"
@@ -145,13 +148,13 @@ export default async function HomePage() {
 
             <ul className="space-y-4 text-sm text-gray-700">
               <li className="flex items-center justify-between gap-4">
-                <span>Culto de Celebração</span>
+                <span>Culto da Família</span>
                 <span className="font-semibold text-brand-red">
                   Domingo · 19h30
                 </span>
               </li>
               <li className="flex items-center justify-between gap-4">
-                <span>Culto da Família</span>
+                <span>Corredor dos Milagres</span>
                 <span className="font-semibold text-brand-red">
                   Quarta · 19h30
                 </span>
@@ -171,7 +174,11 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section id="sabedoria" className="py-16 bg-white border-y border-brand-line">
+      {/* SABEDORIA CRISTÃ */}
+      <section
+        id="sabedoria"
+        className="py-16 bg-white border-y border-brand-line"
+      >
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-10">
             <p className="text-xs font-semibold text-brand-red mb-2 uppercase tracking-[0.22em]">
@@ -205,6 +212,12 @@ export default async function HomePage() {
                     <h3 className="text-lg font-semibold text-brand-ink">
                       {videoPrincipal.title}
                     </h3>
+
+                    {videoPrincipal.description ? (
+                      <p className="text-sm text-gray-600 mt-2 whitespace-pre-line">
+                        {videoPrincipal.description}
+                      </p>
+                    ) : null}
                   </div>
                 </>
               ) : (
@@ -243,7 +256,7 @@ export default async function HomePage() {
               </div>
 
               <Button
-                href="https://www.youtube.com/@catedraldafamilia.church"
+                href={YOUTUBE_CHANNEL_URL}
                 variant="primary"
                 className="w-full"
               >
@@ -254,6 +267,7 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* CULTOS ONLINE */}
       <section id="online" className="py-16 bg-brand-paper">
         <div className="max-w-6xl mx-auto px-4 grid gap-10 md:grid-cols-2 items-center">
           <div>
@@ -269,7 +283,7 @@ export default async function HomePage() {
               integrada com o canal oficial da igreja.
             </p>
 
-            <Button href="https://www.youtube.com/@catedraldafamilia.church" variant="primary">
+            <Button href={YOUTUBE_CHANNEL_URL} variant="primary">
               Ir para o canal oficial
             </Button>
           </div>
@@ -280,6 +294,7 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* MINISTÉRIOS */}
       <section
         id="ministerios"
         className="py-16 bg-white border-y border-brand-line"
@@ -315,6 +330,7 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* SOBRE */}
       <section id="sobre" className="py-16 bg-brand-paper">
         <div className="max-w-6xl mx-auto px-4 grid gap-10 md:grid-cols-2 items-start">
           <div>
@@ -364,11 +380,12 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* FOOTER */}
       <footer className="bg-white border-t border-brand-line">
         <div className="max-w-6xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-brand-muted">
           <span>
             © {new Date().getFullYear()} Igreja do Evangelho Quadrangular -
-            Catedral da Familia – Redenção. Todos os direitos reservados.
+            Catedral da Família – Redenção. Todos os direitos reservados.
           </span>
           <span>Desenvolvido por Habeck System</span>
         </div>
