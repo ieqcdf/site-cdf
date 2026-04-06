@@ -9,16 +9,22 @@ export default function VersiculoPopup() {
   useEffect(() => {
     async function carregarVersiculo() {
       try {
-        const res = await fetch("/api/versiculo-do-dia");
+        const jaViu = sessionStorage.getItem("versiculo_visto");
+
+        // 👇 se já viu nessa aba, não mostra de novo
+        if (jaViu) return;
+
+        const res = await fetch("/api/versiculo-do-dia", {
+          cache: "no-store",
+        });
         const data = await res.json();
 
-        const hoje = new Date().toISOString().slice(0, 10);
-        const vistoHoje = localStorage.getItem("versiculo_visto");
-
-        if (vistoHoje !== hoje && data.popup_ativo) {
+        if (data?.ok && data.popup_ativo) {
           setVersiculo(data);
           setShow(true);
-          localStorage.setItem("versiculo_visto", hoje);
+
+          // 👇 marca que já exibiu nessa sessão
+          sessionStorage.setItem("versiculo_visto", "true");
         }
       } catch (err) {
         console.error("Erro ao carregar versículo:", err);
