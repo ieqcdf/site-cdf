@@ -55,65 +55,17 @@ async function getYoutubeVideos() {
 
 export default async function HomePage() {
   const ministerios = [
-    { nome: "Louvor", slug: "louvor" },
-    { nome: "Juventude", slug: "jovens" },
-    { nome: "Ministério Infantil", slug: "infantil" },
-    { nome: "Mulheres", slug: "mulheres" },
-    { nome: "Homens", slug: "homens" },
-    { nome: "Dança", slug: "danca" },
-    { nome: "Diaconato", slug: "diaconato" },
-    { nome: "AME", slug: "ame" },
-    { nome: "MQM", slug: "mqm" },
-    { nome: "Esperança", slug: "esperanca" },
-  ];
-
-  const ultimasAtualizacoes = [
-    {
-      id: "1",
-      ministerio: "AME",
-      titulo: "Ação social levou cuidado e esperança à comunidade",
-      resumo:
-        "O ministério AME realizou uma ação especial com apoio, oração e cuidado às famílias da região.",
-      data: "07/04/2026",
-      imagem: "/logo-catedral.png",
-    },
-    {
-      id: "2",
-      ministerio: "Juventude",
-      titulo: "Encontro de jovens fortaleceu a comunhão e a fé",
-      resumo:
-        "Uma noite marcada por adoração, Palavra e comunhão entre a juventude da igreja.",
-      data: "06/04/2026",
-      imagem: "/logo-catedral.png",
-    },
-    {
-      id: "3",
-      ministerio: "Louvor",
-      titulo: "Novo momento de adoração no culto de domingo",
-      resumo:
-        "O ministério de louvor conduziu a igreja em um tempo especial de entrega e adoração.",
-      data: "05/04/2026",
-      imagem: "/logo-catedral.png",
-    },
-    {
-      id: "4",
-      ministerio: "Mulheres",
-      titulo: "Reunião especial edificou vidas e fortaleceu lares",
-      resumo:
-        "Um encontro de fé, comunhão e fortalecimento espiritual para as mulheres da igreja.",
-      data: "04/04/2026",
-      imagem: "/logo-catedral.png",
-    },
-    {
-      id: "5",
-      ministerio: "Esperança",
-      titulo: "Ministério Esperança compartilha palavra de consolo",
-      resumo:
-        "Uma mensagem de fé e esperança alcançando corações em um tempo de cuidado pastoral.",
-      data: "03/04/2026",
-      imagem: "/logo-catedral.png",
-    },
-  ];
+  { nome: "Louvor", slug: "louvor" },
+  { nome: "Juventude", slug: "jovens" },
+  { nome: "Ministério Infantil", slug: "infantil" },
+  { nome: "Mulheres", slug: "mulheres" },
+  { nome: "Homens", slug: "homens" },
+  { nome: "Dança", slug: "danca" },
+  { nome: "Diaconato", slug: "diaconato" },
+  { nome: "AME", slug: "ame" },
+  { nome: "MQM", slug: "mqm" },
+  { nome: "Esperança", slug: "esperanca" },
+];
 
   const videos = await getYoutubeVideos();
   const videoPrincipal = videos[0] || null;
@@ -149,6 +101,9 @@ export default async function HomePage() {
             <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-brand-ink">
               <a href="#inicio" className="hover:text-brand-red transition">
                 Início
+              </a>
+              <a href="#sabedoria" className="hover:text-brand-red transition">
+                Sabedoria Cristã
               </a>
               <a href="#online" className="hover:text-brand-red transition">
                 Cultos online
@@ -342,102 +297,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ÚLTIMAS ATUALIZAÇÕES */}
-      <section
-        id="atualizacoes"
-        className="py-16 bg-brand-paper border-y border-brand-line"
-      >
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex items-end justify-between gap-4 mb-8">
-            <div>
-              <p className="text-xs font-semibold text-brand-red mb-2 uppercase tracking-[0.22em]">
-                Últimas Atualizações
-              </p>
-              <h2 className="text-3xl font-bold text-brand-ink mb-2">
-                O que está acontecendo na Catedral
-              </h2>
-              <p className="text-gray-600 max-w-2xl">
-                Acompanhe as publicações mais recentes dos ministérios e fique
-                por dentro das novidades da igreja.
-              </p>
-            </div>
-
-            <a
-              href="/noticias"
-              className="hidden md:inline-flex items-center justify-center rounded-full border border-brand-red/30 px-5 py-2.5 text-sm font-semibold text-brand-red hover:bg-brand-red/5 transition"
-            >
-              Ver mais
-            </a>
-          </div>
-
-          <div className="grid gap-6 lg:grid-cols-[1.4fr,1fr]">
-            <a
-              href={`/noticias/${ultimasAtualizacoes[0].id}`}
-              className="group rounded-3xl overflow-hidden border border-brand-line bg-white shadow-soft hover:-translate-y-1 transition"
-            >
-              <div className="h-64 bg-slate-100 overflow-hidden">
-                <img
-                  src={ultimasAtualizacoes[0].imagem}
-                  alt={ultimasAtualizacoes[0].titulo}
-                  className="w-full h-full object-cover group-hover:scale-[1.02] transition"
-                />
-              </div>
-
-              <div className="p-6">
-                <p className="text-xs font-semibold text-brand-red uppercase tracking-[0.18em] mb-2">
-                  {ultimasAtualizacoes[0].ministerio}
-                </p>
-
-                <h3 className="text-2xl font-bold text-brand-ink mb-3">
-                  {ultimasAtualizacoes[0].titulo}
-                </h3>
-
-                <p className="text-gray-600 mb-4">
-                  {ultimasAtualizacoes[0].resumo}
-                </p>
-
-                <p className="text-sm text-gray-500">
-                  {ultimasAtualizacoes[0].data}
-                </p>
-              </div>
-            </a>
-
-            <div className="space-y-4">
-              {ultimasAtualizacoes.slice(1).map((item) => (
-                <a
-                  key={item.id}
-                  href={`/noticias/${item.id}`}
-                  className="block rounded-3xl border border-brand-line bg-white p-5 shadow-soft hover:-translate-y-1 transition"
-                >
-                  <p className="text-xs font-semibold text-brand-red uppercase tracking-[0.18em] mb-2">
-                    {item.ministerio}
-                  </p>
-
-                  <h3 className="text-lg font-semibold text-brand-ink mb-2">
-                    {item.titulo}
-                  </h3>
-
-                  <p className="text-sm text-gray-600 mb-3 line-clamp-2">
-                    {item.resumo}
-                  </p>
-
-                  <p className="text-xs text-gray-500">{item.data}</p>
-                </a>
-              ))}
-
-              <a
-                href="/noticias"
-                className="md:hidden inline-flex items-center justify-center rounded-full border border-brand-red/30 px-5 py-2.5 text-sm font-semibold text-brand-red hover:bg-brand-red/5 transition"
-              >
-                Ver mais
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* CULTOS ONLINE */}
-      <section id="online" className="py-16 bg-white">
+      <section id="online" className="py-16 bg-brand-paper">
         <div className="max-w-6xl mx-auto px-4 grid gap-10 md:grid-cols-2 items-center">
           <div>
             <p className="text-xs font-semibold text-brand-red mb-2 uppercase tracking-[0.22em]">
